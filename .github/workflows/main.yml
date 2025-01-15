@@ -1,0 +1,30 @@
+name: Run Python script automatically
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Runs every day at midnight UTC (you can change this schedule)
+  push:
+    branches:
+      - main  # Trigger this workflow whenever you push to the 'main' branch
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Python script
+        run: |
+          python your_script.py  # Replace with your Python script name
